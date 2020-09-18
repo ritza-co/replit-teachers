@@ -1,6 +1,6 @@
 # Create your first autograded Python homework with Repl.it
 
-**Note: you need a subscription to Repl.it's [Teams for Education](https://blog.repl.it/teams-for-education) as well as a team where you have owner or admin privileges in order to follow this guide.**
+**Note: you need a subscription to Repl.it's [Teams for Education](https://repl.it/teams) as well as a team where you have owner or admin privileges in order to follow this guide.**
 
 If you teach a programming course and wish that you could build a robot to grade your students' homework for you, you can! In this guide, you'll see exactly how to set it up with some real-world examples. 
 
@@ -20,7 +20,7 @@ Autograding comes in a variety of different forms.
 * **Partial auto-grading:** To save time, you might have a script that runs your students code with a pre-specified set of inputs to see exactly how it works and where it breaks, but you still need to decide what grade to award based this.
 * **Full autograding:** You have a sophisticated testing suite and the students' grades are determined by how many tests their code passes.
 
-In this guide, we'll show you how to set up a system that implements the completely hands-off version: **full autograding**. 
+In this guide, we'll show you how to set up partial auto-grading: you'll execute the tests individually for each student's submission but still award grades manually.
 
 In theory, students could receive their grade automatically too, minutes after they submit. In the version we build though, only you, the teacher, will get the summary of grades, so that you can check these, add any personalised comments, and then share with your students at your convenience.
 
@@ -33,21 +33,23 @@ If you're using teams for education, you should make sure that you're added as a
 
 This means that you will be able to see all submissions (called 'forks') of the homework, while your students will only be able to see the skeleton (or 'template' as described below) that you provide.
 
-![](https://static.ritza.co/repl/01-member-roles.png)
+![](https://static.ritza.co/repl/teachers-01-autograding/01-member-roles.png)
 
 ### Understanding templates
 
 Templates let you create a repl that might have different variants. For example, you can add the homework questions and skeleton code to a template and each student can then easily create their own version of this.
 
 * Admins and owners can edit the main copy of the template: any changes they make will be seen by any student who creates a copy.
-* Once the tempalte is published, members (students) can only see the template and create their own copy to work on their submission. They cannot edit the main copy.
+* Once the template is published, members (students) can only see the template and create their own copy to work on their submission. They cannot edit the main copy.
 * People outside the team cannot see the template at all.
+
+Only admins can see the all forks of a . This means that students cannot see each other's work, which helps prevent plagiarism.
 
 ## Create your first template
 
 Create a template for the homework assignment you want to prepare and add some details to help you and your students identify it. You can also specify what programming language to use. In this exampe, we'll use Python.
 
-![](https://static.ritza.co/repl/02-create-a-template.png)
+![](https://static.ritza.co/repl/teachers-01-autograding/02-create-a-template.png)
 
 Hit the create button and you'll be taken to a normal repl but with some additional features. Note the 'publish template' button in the top right that we'll use later.
 
@@ -74,6 +76,14 @@ def subtract(a, b):
 
 In this example, we are only asking them to create two basic functions, `add` and `subtract`.
 
+If you need to provide more comprehensive instructions you can create a [markdown](https://en.wikipedia.org/wiki/Markdown) file from within the repl by pressing the "add file" button in the files pane and giving the filename a `.md` extension. Markdown files have two modes, "edit" and "preview" so your students will be able to see basic formatting like links or bullet points.
+
+![](https://static.ritza.co/repl/teachers-01-autograding/markdown-example.png)
+
+If you already have the instructions in a different format such as PDF, you can upload the file from your local machine and students will be able to view it directly within the Repl.it interface.
+
+![](https://static.ritza.co/repl/teachers-01-autograding/upload-file.png)
+
 ### Adding tests
 
 Now create a new file called `test_main.py` and add the following code
@@ -95,7 +105,7 @@ Of course these tests won't pass at the moment beause the functions haven't been
 
 ## Installing PyTest
 
-![](https://static.ritza.co/repl/installing-pytest-pm.png)
+![](https://static.ritza.co/repl/teachers-01-autograding/installing-pytest-pm.png)
 
 To run the tests, we'll use `pytest`, which is a Python package. Install it by 
 
@@ -104,7 +114,9 @@ To run the tests, we'll use `pytest`, which is a Python package. Install it by
 3. Clicking on `pytest` from the results.
 4. Click the plus button to install the package
 
-![](https://static.ritza.co/repl/05-clicking-install.png)
+![](https://static.ritza.co/repl/teachers-01-autograding/05-clicking-install.png)
+
+Because we installed PyTest in the main version of the template, it will automatically be installed in students' versions the first time they run code, so they won't have to complete these steps in their copies.
 
 ## Running the tests
 
@@ -112,23 +124,25 @@ PyTest looks for test code automatically (files and functions that start with `t
 
 Open the command shell by pressing `Cmd + Shift + S` on MacOS or `Ctrl + Shift + S` on other computers. Note that this is different from the Python output pane that's open by default. The command shell will open up below the Python one, as shown here.
 
-![](https://static.ritza.co/repl/06-opening-shell.png)
+![](https://static.ritza.co/repl/teachers-01-autograding/06-opening-shell.png)
 
 Type in `pytest` and press Enter. This will invoke PyTest, look for the tests we wrote, and run them. You should see output similar to that shown below.
 
-![](https://static.ritza.co/repl/07-failed-tests.png)
+![](https://static.ritza.co/repl/teachers-01-autograding/07-failed-tests.png)
 
-PyTest is designed to help software engineers find bugs more than it is for grading homework so you'll see it produces a lot of output to pinpoint exactly what went wrong. The last two lines of summary are the most interesting for our purposes though: we can see our first test returned `None` while we were expecting `3` and our second test also returned `None` while we were expecting 2.
+PyTest is designed to help software engineers find bugs more than it is for grading homework so you'll see it produces a lot of output to pinpoint exactly what went wrong.  This also helps students become comfortable with reading error messages and debugging code.
+
+The last two lines of summary are the most interesting for our purposes though: we can see our first test returned `None` while we were expecting `3` and our second test also returned `None` while we were expecting 2.
 
 This means that our set up is working: it's the students' job to fix the functions so that they pass these tests.
 
 Before students can see and submit this homework you need to 'publish' it. Do that now by pressing the button in the top right.
 
-![](https://static.ritza.co/repl/08-publishing-template.png)
+![](https://static.ritza.co/repl/teachers-01-autograding/08-publishing-template.png)
 
-Now slide the button across to 'published' and your students can access the template.
+Now slide the button across to 'published' and your students can access the template. They will also get a notification in Repl.it that a new template has been published, and you will similarly see a notification once they fork and submit.
 
-![](https://static.ritza.co/repl/09-publishing-2.png)
+![](https://static.ritza.co/repl/teachers-01-autograding/09-publishing-2.png)
 
 ## Submitting your homework as a student
 
@@ -136,11 +150,11 @@ To experience the process from your students perspective, sign into a normal 'me
 
 You'll see all of your published templates but no 'edit' button. Instead there'll be a 'fork template' button which is the first thing your student needs to press to begin the homework assignment.
 
-![](https://static.ritza.co/repl/10-forking-a-template.png)
+![](https://static.ritza.co/repl/teachers-01-autograding/10-forking-a-template.png)
 
 The student can now make changes to the code. In this example, she fills out the return statements. Note how `a` and `b` are in the wrong order in the subtract function: the correct answer is `return a - b`. 
 
-![](https://static.ritza.co/repl/11-adding-changes-student.png)
+![](https://static.ritza.co/repl/teachers-01-autograding/11-adding-changes-student.png)
 
 Once the student is satisfied, she can press the 'submit' button in the top right.
 
@@ -148,32 +162,22 @@ Once the student is satisfied, she can press the 'submit' button in the top righ
 
 Back in your teacher account, navigate to the team dashboard and find the relevant template. Press the 'View forks' button.
 
-![](https://static.ritza.co/repl/12-viewing-forks.png)
+![](https://static.ritza.co/repl/teachers-01-autograding/12-viewing-forks.png)
 
 You'll be taken to a page where you can see all versions of this assignment. In this example, we only see one (from the test we created above). Once your students start forking the assignment you'll see more, and each of them will be labeled as "submitted" or "unsubmitted", depending on whether or not the student has pressed the submit button.
 
-![](https://static.ritza.co/repl/13-forks.png)
+![](https://static.ritza.co/repl/teachers-01-autograding/13-forks.png)
 
 Open the fork, open the command shell and run `pytest` again. You should see one test pass and one fail. The subtract function is calculating `2-4` instead of `4-2` and getting the wrong answer.
 
-![](https://static.ritza.co/repl/14-one-fail.png)
+![](https://static.ritza.co/repl/teachers-01-autograding/14-one-fail.png)
 
-Once your students have each created a fork and submitted an assignemtn, you can open each of the students forks and run `pytest` to easily see a summary of how many tests they passed and what mistakes they made. If you want, you can simply use the percentage of the tests passed as a grade: for example, our imaginary student would be awarded 50% for passing 1/2 tests.
+Once your students have each created a fork and submitted an assignment, you can open each of the students forks and run `pytest` to easily see a summary of how many tests they passed and what mistakes they made. If you want, you can simply use the percentage of the tests passed as a grade: for example, our imaginary student would be awarded 50% for passing 1/2 tests, but because you can see exactly what went wrong you can also decide if some tests are more important than others.
 
-While this is a semi-automated solution, you are still required to open each solution manually in order to kick of the tests. In [Creating a centralised grading application with Repl.it](#), we look at taking autograding a step further to avoid this.
+While this is a semi-automated solution, you are still required to open each solution manually in order to kick of the tests. In [Creating a centralised grading application with Repl.it](#), we show you how to take autograding a step further to avoid this.
 
 ## Conclusion
 
 In this guide we showed you how to set up a basic auto-graded Python assignment. Unit tests are pretty powerful and you can use them to do more than just check basic inputs and outputs. For example, it's possible to check how many times a function was called (e.g. to check if students are using `open()` correctly), to check if specific Exceptions are raised, and more.
 
 We focused on using PyTest and Python, but all languages have their own unit testing frameworks. You can use [JUnit](https://junit.org) for Java or [Jest](https://jestjs.io/) for JavaScript in similar ways.
-
-
-
-
-
-
-
-
-
-
