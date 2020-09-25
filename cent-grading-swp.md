@@ -1,3 +1,4 @@
+file:///Users/g/git/ritza-org/repl/replit-teachers/02-building-a-centralised-autograder.md {"mtime":1601038356039,"ctime":1600442628810,"size":3527,"etag":"35nhscfim3ko","orphaned":false}
 # Building a centralised autograder with Repl.it
 
 In a [previous guide](#) we built a basic autograding solution that could automatically run and test your students' assignments. However, there were still some manual steps involved: you needed to navigate to each students fork of the assignment and kick of the tests manually.
@@ -12,7 +13,7 @@ In this guide, we assume that your students are learning Python. We'll give an e
 
 The basic workflow is similar to in the previous guide, but this time you won't need to look at each student's fork individually. Instead, students will submit them to a centralised server, and you can view their code their, or just look at the summary report it will generate.
 
-![](https://i.ritzastatic.com/fa45c40179924e2fa23b61f19c63d980/solution-overview.png)
+![](solution-overview.png)
 
 After a student forks the assignment, they will be able to write their code, test it on their own, and then submit it when they are satisfied with their answers. 
 
@@ -24,7 +25,7 @@ We'll start by creating the grading server. We don't want to share this code for
 
 Press the `+` button in the top right corner, choose Python, call your repl "grading-server", choose your team account as the owner, and set the repl to "private".
 
-![](https://i.ritzastatic.com/a49c5ac633374f96a41301934a2d4e58/create-server.png)
+![](create-server.png)
 
 Our grading server will consist of a few different components, namely:
 
@@ -182,7 +183,7 @@ That's it for our server. Press the "Run" button and your server should start ru
 
 Take a note of the URL which is based on your team and project name as we'll need to add this to the student assignment that we create in the next step.
 
-![](https://i.ritzastatic.com/47e1bcf63eb946adacb4f500e5e45204/running-server-and-url.png)
+![](running-server-and-url.png)
 
 
 ## Setting up the assignment 
@@ -193,7 +194,7 @@ Now that we have a server, we need to build the other half: the assignment templ
 
 On your teams page, create a new template. This will be specific to a single assignment for your students so call it something like "Grade 10 Python homework week 1" so you can keep track of different assignments for different classes.
 
-![](https://i.ritzastatic.com/175ab1509be64763bcb7f38662dad9af/create-template.png)
+![](create-template.png)
 
 ### Add the code for the assignment
 
@@ -278,7 +279,7 @@ Change the url to the one that you copied in the final step of the server set up
 
 To make sure that everything works as expected, run the template. It's still in test mode, so it should run the two functions with the example inputs and display the output. Because we only have the starter code, we can see that the functions don't work yet.
 
-![](https://i.ritzastatic.com/ead348c62baa4a28a08b86a42d8a6325/running-template-starter.png)
+![](running-template-starter.png)
 
 Now fill out the two functions so that they look as follows. Note that we have deliberate error in the `subtract()` function to make sure that our grading is working as expected.
 
@@ -294,11 +295,11 @@ def subtract(a, b):
 
 Hit run again and you should see that the functions return results now.
 
-![](https://i.ritzastatic.com/84fff66b30da42b89bba6b86428fa138/running-template-completed-errors.png)
+![](running-template-completed-errors.png)
 
 Uncomment the `# MODE = "SUBMIT"` line and press "Run" again. This time it should submit the solution to the grader and return a confirmation message.
 
-![](https://i.ritzastatic.com/900076ca08094f929a0a387c39bfcb62/submission-confirmed.png)
+![](submission-confirmed.png)
 
 Fix the subtract function by swapping `b` and `a` as follows and submit it one more time by pressing the Run button. This lets us test that resubmissions are working.
 
@@ -331,22 +332,9 @@ Each of the submission generated a new subfolder with the student number in the 
 
 In each of these folders, you can see the code that was submitted.
 
-You can also see `report.md` has been generated, with details of the two submissions (who submitted them and when) and their calculated grades.
+You can also see `report.md` has been generated, with details of the two submissions and their grades.
 
-![](https://i.ritzastatic.com/1ea3403b1f18430ab434284c9d080933/example-report.png)
-
-
-## Where next?
-
-Now you have a robot to take care of most of your grading for you which should save you a bunch of time! In this guide, we showed you how to set up an autograder, but you might like to extend it on your own with some additional features. For example, you could
-
-* Create a more sophisticated directory and reporting structure so that different assignments can be submitted to the same server without all being mixed up into a single directory and single report.
-* Set up a service like [UpTimerRobot](https://uptimerobot.com/) to keep an eye on your grading server and notify you if it becomes unavailable (this also stops Repl.it shutting it down from inactivity)
-* Return the grades to students so that they see "You scored 75%" after submitting instead of just "Your code has been submitted".
-
-We've focussed on Python in this guide, but you should be able to adapt it to testing and grading submissions in JavaScript, Java, or other languages with some work. In future guides, we'll give examples of how to do this.
-
-
+![](example-report.png)
 
 
 
