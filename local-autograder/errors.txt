@@ -1,0 +1,6 @@
+received submission from Unknown author at 2020-09-25T17:21:50.794698 but something went wrong
+'_io.TextIOWrapper' object has no attribute 'save'
+----------
+received submission from Unknown author at 2020-09-25T17:22:28.801051 but something went wrong
+division by zero
+----------

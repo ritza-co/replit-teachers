@@ -2,6 +2,7 @@
 
 In a [previous guide](#) we built a basic autograding solution that could automatically run and test your students' assignments. However, there were still some manual steps involved: you needed to navigate to each students fork of the assignment and kick of the tests manually.
 
+
 In this guide, we'll show you how to take it a step further and build a centralised grading server. Your students will be able to submit their assignments to this server, and each submission will automatically kick of the tests, assign a grade, and create a summary report of submissions and grades for you to review.
 
 Note that you'll need a subscription to [Teams for Education](#) to follow this guide as its presented, but you should also be able to adapt it to run using a normal Repl.it account if you need.
@@ -66,13 +67,20 @@ def save_submission(f, studentnumber):
     dirname = studentnumber
     i = 1
     while os.path.exists(dirname):
-        dirname = f"{studentnumber}-{i}"
+        dirname = f"{studentnumber}_{i}"
         i += 1
     os.mkdir(dirname)
-    code_destination = f"{dirname}/main.py"
+    code_destination = f"{dirname}/main{dirname}.py"
     test_destination = f"{dirname}/test_solution{dirname}.py"
     conf_destination = f"{dirname}/conftest.py"
-    shutil.copyfile("test_solution.py",  test_destination)
+
+    with open("test_solution.py") as tf:
+        s = tf.read()
+
+    s = f"import main{dirname} as main" + s
+    with open(test_destination, "w") as tf:
+        tf.write(s)
+
     shutil.copyfile("conftest.template", conf_destination)
     f.save(code_destination)
     return dirname
@@ -133,8 +141,6 @@ You can adapt this to your actual homework assignment as needed, but we recommen
 Create a new file called `test_solution.py` and add the following code.
 
 ```python
-import main
-
 def test_add_two_pos():
     assert main.add(1,2) == 3
 
@@ -148,7 +154,8 @@ def test_subtract_two_neg():
     assert main.subtract(-2, -3) == 1
 ```
 
-This assumes that the students submit a single file called `main.py` and that their file contains the functions `add()` and `subtract()`.
+Each student's file will have a different name (e.g. `mainJS1337A_1.py`) so we don't hardcode the import for `main.py`. The server will logic will take care of adding the correct import line when it creates a copy of this file for each submission.
+
 
 ### Creating the configuration for PyTest
 
@@ -327,7 +334,7 @@ def subtract(a, b):
 
 Navigate back to your `grading-server` project and you should see some new files and folders that have been created by the grading project.
 
-Each of the submission generated a new subfolder with the student number in the first line of the submission file.  Because they were the same, the second one had `-1` appended to it.
+Each of the submission generated a new subfolder with the student number in the first line of the submission file.  Because they were the same, the second one had `_1` appended to it.
 
 In each of these folders, you can see the code that was submitted.
 
@@ -345,17 +352,3 @@ Now you have a robot to take care of most of your grading for you which should s
 * Return the grades to students so that they see "You scored 75%" after submitting instead of just "Your code has been submitted".
 
 We've focussed on Python in this guide, but you should be able to adapt it to testing and grading submissions in JavaScript, Java, or other languages with some work. In future guides, we'll give examples of how to do this.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
