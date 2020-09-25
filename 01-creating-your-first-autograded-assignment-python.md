@@ -174,8 +174,6 @@ Open the fork, open the command shell and run `pytest` again. You should see one
 
 Once your students have each created a fork and submitted an assignment, you can open each of the students' forks and run `pytest` to easily see a summary of how many tests they passed and what mistakes they made. If you want, you can simply use the percentage of the tests passed as a grade (for example, our imaginary student would be awarded 50% for passing 1/2 tests), but because you can see exactly what went wrong you can also decide if some tests are more important than others.
 
-While this is a semi-automated solution, you are still required to open each solution manually in order to kick off the tests. In [Creating a centralised grading application with Repl.it](#), we show you how to take autograding a step further to avoid this.
-
 ## Conclusion
 
 In this guide we showed you how to set up a basic auto-graded Python assignment. Unit tests are pretty powerful and you can use them to do more than just check basic inputs and outputs. For example, it's possible to check how many times a function was called (e.g. to check if students are using `open()` correctly), to check if specific exceptions are raised and more.
