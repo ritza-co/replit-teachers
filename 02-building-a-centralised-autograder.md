@@ -1,27 +1,26 @@
 # Building a centralised autograder with Repl.it
 
-In a [previous guide](#) we built a basic autograding solution that could automatically run and test your students' assignments. However, there were still some manual steps involved: you needed to navigate to each students fork of the assignment and kick of the tests manually.
+In a [previous guide](#) we built a basic autograding solution that could automatically run and test your students' assignments. However, there were still some manual steps involved: you needed to navigate to each student's fork of the assignment and kick off the tests manually.
 
+In this guide, we'll show you how to take it a step further and build a centralised grading server. Your students will be able to submit their assignments to this server, and each submission will automatically kick off the tests, assign a grade, and create a summary report of submissions and grades for you to review.
 
-In this guide, we'll show you how to take it a step further and build a centralised grading server. Your students will be able to submit their assignments to this server, and each submission will automatically kick of the tests, assign a grade, and create a summary report of submissions and grades for you to review.
-
-Note that you'll need a subscription to [Teams for Education](#) to follow this guide as its presented, but you should also be able to adapt it to run using a normal Repl.it account if you need.
+Note that you'll need a subscription to [Teams for Education](#) to follow this guide as it is presented, but you should also be able to adapt it to run using a normal Repl.it account if you need to.
 
 In this guide, we assume that your students are learning Python. We'll give an example Python assignment and an example testing suite using [PyTest](). We'll use Flask to create the centralised grading server.
 
 ## Overview of how the solution works
 
-The basic workflow is similar to in the previous guide, but this time you won't need to look at each student's fork individually. Instead, students will submit them to a centralised server, and you can view their code their, or just look at the summary report it will generate.
+The basic workflow is similar to in the previous guide, but this time you won't need to look at each student's fork individually. Instead, students will submit them to a centralised server, and you can view their code there, or just look at the summary report it will generate.
 
 ![](https://i.ritzastatic.com/fa45c40179924e2fa23b61f19c63d980/solution-overview.png)
 
 After a student forks the assignment, they will be able to write their code, test it on their own, and then submit it when they are satisfied with their answers. 
 
-The grading server will not be visible to students, so they will still not be able to view each other's works or grades.
+The grading server will not be visible to students, so they will still not be able to view each other's work or grades.
 
 ## Setting up the grading server
 
-We'll start by creating the grading server. We don't want to share this code for students, so create a normal team Repl (not a template).
+We'll start by creating the grading server. We don't want to share this code for students, so create a normal team repl (not a template).
 
 Press the `+` button in the top right corner, choose Python, call your repl "grading-server", choose your team account as the owner, and set the repl to "private".
 
@@ -30,11 +29,11 @@ Press the `+` button in the top right corner, choose Python, call your repl "gra
 Our grading server will consist of a few different components, namely:
 
 * A Flask server that can receive files that students submit
-* PyTest code to test the student's submission
+* PyTest code to test the students' submissions
 * Configuration for PyTest to extract information about how many tests were passed and calculate a grade
 * A report file to keep a summary of all submissions and grades
 
-### Creating the server in main.py
+### Creating the server in `main.py`
 
 In `main.py` add the following code 
 
@@ -63,7 +62,7 @@ def extract_student_number(f):
     return sn
 
 def save_submission(f, studentnumber):
-    """Saves a copy of the students submission to a subfolder"""
+    """Saves a copy of the student's submission to a subfolder"""
     dirname = studentnumber
     i = 1
     while os.path.exists(dirname):
@@ -122,7 +121,6 @@ def submit():
                 f.write("----------\n")
     return "OK"
 
-
 if __name__ == "__main__":
     app.run("0.0.0.0")
 ```
@@ -133,8 +131,8 @@ This waits for a file submission and then tries to grade it. If the assignment i
 
 For demonstration, we're going to assume that the homework assignment requires the students to write two functions:
 
-* `add(a, b)` which sums the two input integers and returns the result and
-* `subtract(a, b)` which subtracts b from a and returns the result.
+* `add(a, b)` which sums the two input integers and returns the result
+* `subtract(a, b)` which subtracts `b` from `a` and returns the result
 
 You can adapt this to your actual homework assignment as needed, but we recommend that you first make sure that everything is working with this simple example before you write a more advanced set of tests.
 
@@ -154,8 +152,7 @@ def test_subtract_two_neg():
     assert main.subtract(-2, -3) == 1
 ```
 
-Each student's file will have a different name (e.g. `mainJS1337A_1.py`) so we don't hardcode the import for `main.py`. The server will logic will take care of adding the correct import line when it creates a copy of this file for each submission.
-
+Each student's file will have a different name (e.g. `mainJS1337A_1.py`) so we don't hard-code the import for `main.py`. The server logic will take care of adding the correct import line when it creates a copy of this file for each submission.
 
 ### Creating the configuration for PyTest
 
@@ -185,12 +182,9 @@ The variables are automatically passed in by PyTest and contain information abou
 
 The logic in `main.py` that you created earlier will copy a new version of this for each submission with a unique name. This is important to stop the tests conflicting with each other as PyTest keeps a local cache of tests for efficiency.
 
-That's it for our server. Press the "Run" button and your server should start running and display an "OK" message, as shown below. 
-
-Take a note of the URL which is based on your team and project name as we'll need to add this to the student assignment that we create in the next step.
+That's it for our server. Press the `Run` button and your server should start running and display an "OK" message, as shown below. (Take a note of the URL, which is based on your team and project name, as we'll need to add this to the student assignment that we create in the next step.)
 
 ![](https://i.ritzastatic.com/47e1bcf63eb946adacb4f500e5e45204/running-server-and-url.png)
-
 
 ## Setting up the assignment 
 
@@ -216,9 +210,9 @@ In the `main.py` file, add the following code.
 # JS1337A
 # Ensure the above line contains exactly your student number.
 # 
-# You can test your code by pressing the run button. 
-# Once you are happy with it, uncomment the "`MODE = "SUBMIT"` line 
-# and press the Run button again to submit
+# You can test your code by pressing the `Run` button. 
+# Once you are happy with it, uncomment the `MODE = "SUBMIT"` line 
+# and press the `Run` button again to submit
 # -----------------------------------------------------------------
 
 MODE = "TEST"
@@ -249,11 +243,11 @@ if __name__ == "__main__":
     main()
 ```
 
-Change the comment on the very first line to match the format that your students are used to identifying themselves by. This will be used in the report that the server generates and also for the directory names that it uses to store the students' code.
+Change the comment on the very first line to match the format of your students' identification numbers. This will be used in the report that the server generates and also for the directory names that it uses to store the students' code.
 
-The two global variables at the top indicate whether the student is ready to submit or not. By default, the code is in testing mode and when the student presses the "run" button, it will run their code and display the results to them. 
+The two global variables at the top indicate whether the student is ready to submit or not. By default, the code is in testing mode and when the student presses the `Run` button, it will run their code and display the results to them. 
 
-Once they uncomment the `# MODE = "SUBMIT"` line, it changes to submission mode. Now when the student hits the run button, it'll submit the code to our server.
+Once they uncomment the `# MODE = "SUBMIT"` line, it changes to submission mode. Now when the student hits the `Run` button, it will submit the code to our server.
 
 The `add()` and `subtract()` functions are starter code for the student to work from. The `test()` function runs these functions with some sample inputs and shows the results to the student.
 
@@ -279,7 +273,7 @@ def submit():
             print("Sorry, something went wrong")
 ```
 
-Change the url to the one that you copied in the final step of the server set up, as this is where the students' assignments will be submitted.
+Change the URL to the one that you copied in the final step of the server setup, as this is where the students' assignments will be submitted.
 
 ### Testing it all out
 
@@ -287,7 +281,7 @@ To make sure that everything works as expected, run the template. It's still in 
 
 ![](https://i.ritzastatic.com/ead348c62baa4a28a08b86a42d8a6325/running-template-starter.png)
 
-Now fill out the two functions so that they look as follows. Note that we have deliberate error in the `subtract()` function to make sure that our grading is working as expected.
+Now fill out the two functions so that they look as follows. Note that we have a deliberate error in the `subtract()` function to make sure that our grading is working as expected.
 
 ```python
 def add(a, b):
@@ -299,15 +293,15 @@ def subtract(a, b):
     return b - a
 ```
 
-Hit run again and you should see that the functions return results now.
+Hit `Run` again and you should see that the functions return results now.
 
 ![](https://i.ritzastatic.com/84fff66b30da42b89bba6b86428fa138/running-template-completed-errors.png)
 
-Uncomment the `# MODE = "SUBMIT"` line and press "Run" again. This time it should submit the solution to the grader and return a confirmation message.
+Uncomment the `# MODE = "SUBMIT"` line and press `Run` again. This time it should submit the solution to the grader and return a confirmation message.
 
 ![](https://i.ritzastatic.com/900076ca08094f929a0a387c39bfcb62/submission-confirmed.png)
 
-Fix the subtract function by swapping `b` and `a` as follows and submit it one more time by pressing the Run button. This lets us test that resubmissions are working.
+Fix the subtract function by swapping `b` and `a` as follows and submit it one more time by pressing the `Run` button. This lets us test that resubmissions are working.
 
 ```python
 def subtract(a, b):
@@ -334,7 +328,7 @@ def subtract(a, b):
 
 Navigate back to your `grading-server` project and you should see some new files and folders that have been created by the grading project.
 
-Each of the submission generated a new subfolder with the student number in the first line of the submission file.  Because they were the same, the second one had `_1` appended to it.
+Each of the submissions generated a new subfolder with the student number in the first line of the submission file. Because they were the same, the second one has `_1` appended to it.
 
 In each of these folders, you can see the code that was submitted.
 
@@ -342,13 +336,12 @@ You can also see `report.md` has been generated, with details of the two submiss
 
 ![](https://i.ritzastatic.com/1ea3403b1f18430ab434284c9d080933/example-report.png)
 
-
 ## Where next?
 
 Now you have a robot to take care of most of your grading for you which should save you a bunch of time! In this guide, we showed you how to set up an autograder, but you might like to extend it on your own with some additional features. For example, you could
 
 * Create a more sophisticated directory and reporting structure so that different assignments can be submitted to the same server without all being mixed up into a single directory and single report.
-* Set up a service like [UpTimerRobot](https://uptimerobot.com/) to keep an eye on your grading server and notify you if it becomes unavailable (this also stops Repl.it shutting it down from inactivity)
+* Set up a service like [UpTimerRobot](https://uptimerobot.com/) to keep an eye on your grading server and notify you if it becomes unavailable (this also stops Repl.it shutting it down from inactivity).
 * Return the grades to students so that they see "You scored 75%" after submitting instead of just "Your code has been submitted".
 
-We've focussed on Python in this guide, but you should be able to adapt it to testing and grading submissions in JavaScript, Java, or other languages with some work. In future guides, we'll give examples of how to do this.
+We've focused on Python in this guide, but you should be able to adapt it to testing and grading submissions in JavaScript, Java, or other languages, with some work. In future guides, we'll give examples of how to do this.
