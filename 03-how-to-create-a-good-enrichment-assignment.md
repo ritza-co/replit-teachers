@@ -9,11 +9,12 @@ But setting an appropriate project can be challenging for teachers. In this guid
 ## What makes a great extended homework assignment?
 
 A good enrichment assignment should be:
-* **Motivating:** The student should be inspired to build something fun or useful. Multiple choice questions or work that closely matches the format of the normal homework is often not a good fit.
+
+* **Motivating:** The student should be inspired to build something fun or useful. Multiple-choice questions or work that closely matches the format of the normal homework is often not a good fit.
 * **Practical:** The student should be able to use or play with what they've built, and show it off to friends and family.
 * **Difficult to plagiarise:** Especially if there are bonus grades on offer, students shouldn't be able to easily copy from each other or from online code samples and submit it as their own work.
 
-Finally, extended homework needs to find a delicate balance between between freedom and constraints. Students should have enough freedom to explore and learn related concepts on their own, while having some constraints so that you can fairly compare the work done by different students and to provide enough guidance as to not be overwhelming.
+Finally, extended homework needs to find a delicate balance between between freedom and constraints. Students should have enough freedom to explore and learn related concepts on their own, while having some constraints so that you can fairly compare the work done by different students and to provide enough guidance that the assignment is not overwhelming.
 
 ## Example topics that work well for enrichment assignments
 
@@ -28,21 +29,21 @@ Different students are likely to find different topics more inspiring: some peop
 
 ## Example: Build a memory game with PyGame
 
-An example of a simple game that is a great starting point for students who are interested in game development is the well-known memory game. In this game, we have a set of cards with two of each kind of color. The cards are placed face down and the player is allowed to turn over any two cards. If the cards match, the cards are removed. If not, the cards are turned face down again.
+An example of a simple game that is a great starting point for students who are interested in game development is the well-known memory game. In this game, we have a set of cards with two of each kind of colour. The cards are placed face down and the player is allowed to turn over any two cards. If the cards match, the cards are removed. If not, the cards are turned face down again.
 
 At the start, players turn over cards at random, trying to remember what cards they see and remembering where the matches are. 
 
-This is a good project for beginners as it is fairly simple, not requiring moving objects or physics simulations, while also being very extensible. Ambitious students can add many features such as scoring, animations, automatic card flipping, or more combinations of shapes and colour combinations for the cards.
+This is a good project for beginners as it is fairly simple, not requiring moving objects or physics simulations, while also being very extensible. Ambitious students can add many features such as scoring, animations, automatic card flipping, or more combinations of shapes and colours for the cards.
 
-To set this project as a homework assignment, you should give the student enough code to get started that they can immediately interact with the program and see how the basics of PyGame works, but not so much starter code that they are overwhelmed and confused by how it works. Giving them around 50 lines of code to start is usually a good ballpark for something that is useful but can also be understood easily.
+To set this project as a homework assignment, you should give the student enough code to get started that they can immediately interact with the program and see how the basics of PyGame work, but not so much starter code that they are overwhelmed and confused by how it works. Giving them around 50 lines of code to start is usually a good ballpark for something that is useful but can also be understood easily.
 
-We've created an example starter Repl that you can fork (and adapt if necessary before giving to your students) [here](https://repl.it/@ritza/memory-game-starter-project). It demonstrates how to lay out the cards using random colours, and how to detect which card a user clicked on.
+We've created an example starter repl that you can fork (and adapt if necessary before giving to your students) [here](https://repl.it/@ritza/memory-game-starter-project). It demonstrates how to lay out the cards using random colours, and how to detect which card a user clicked on.
 
 ![](https://i.ritzastatic.com/712083f34fd24286b370091de159d07e/memory-starter.png)
 
 ## Example instructions for a student
 
-Here's an example of how you could introduce your students to this project. These instructions are also in the [accompanying repl](https://repl.it/@ritza/memory-game-starter-project#instructions.md) in Markdown format so you can easily edit them as required and the student can easily read the formatted version.
+Here's an example of how you could introduce your students to this project. These instructions are also in the [accompanying repl](https://repl.it/@ritza/memory-game-starter-project#instructions.md) in markdown format so you can easily edit them as required and the student can easily read the formatted version.
 
 <hr/>
 
@@ -51,9 +52,9 @@ Here's an example of how you could introduce your students to this project. Thes
 This week your enrichment task is to build a memory game in Python using PyGame. 
 
 #### Game background
-Your game consists of a set of cards which have different colours on the front but have the same backs. The player has to find matching pairs of cards by turning them over.
+Your game consists of a set of cards that have different colours on the front but have the same backs. The player has to find matching pairs of cards by turning them over.
 
-You start with 16 cards of 8 colors: 2 cards of each color.
+You start with 16 cards of 8 colours: 2 cards of each color.
 
 Start the game by laying out the 16 cards in a 4x4 grid, all front side down.
 
@@ -78,15 +79,15 @@ Specifically you need to:
 ### Optional extra features
 
 Feel free to implement any extra features that you think would be fun! Some ideas are:
+
 * Automatically turn the cards back upside down after a given time period instead of making the player manually return the cards upside down
-* Turn it into a multi player game and keep track of the score for each player (each match the player gets to 'keep' the removed cards and they are added to that player's score)
-* Make the board size dyanmic: allow the player to choose to play on a bigger board (you'll need to add more colours for this or allow for multiple possible matches of each colour)
+* Turn it into a multiplayer game and keep track of the score for each player (each match the player gets to 'keep' the removed cards and they are added to that player's score).
+* Make the board size dynamic: allow the player to choose to play on a bigger board (you'll need to add more colours for this or allow for multiple possible matches of each colour).
 * Add gaps between the cards to make it easier to differentiate them when two cards of the same colour are next to each other.
 
 Good luck!
 
 <hr />
-
 
 ## What to look for in a solution
 
@@ -103,17 +104,18 @@ It should be easy to spot if your students borrowed too heavily from that exampl
 For example, the Google search shown below shows many sources that use exactly the same code:
 
 ![](https://i.ritzastatic.com/0ba14ad01e64430bb64137b89d21e9fd/plagiarism.png)
+
 ### Reusable code
 
 Games like this one are a great example to introduce your students to the idea of DRY (don't repeat yourself) in software engineering. Because the entire screen has to be completely redrawn even when only one card is changed, it's likely that your students will be tempted to copy-paste the same code into different places (for example, to set up the board, and to update it after a click).
 
-If your students have already learned to use small functions or Object Oriented Programming, make sure that they are following these good practices. Especially with a solution that relies on classes like `Board`, `Card`, `Player`, `Game`, etc, it can be quite tricky to decide what functionality belongs where. Should `Card` objects keep track of their own coordinates or is that the job of the `Board`? 
+If your students have already learned to use small functions or Object Oriented Programming, make sure that they are following these good practices. Especially with a solution that relies on classes like `Board`, `Card`, `Player`, `Game`, etc., it can be quite tricky to decide what functionality belongs where. Should `Card` objects keep track of their own coordinates or is that the job of the `Board`? 
 
 While there are many different ways to implement this solution, and in the end the 'best' solution might come down to personal taste, try to check that your students have thought about these issues (and hopefully left comments explaining their choices). 
 
-### User Experience
+### User experience
 
-Games are also a good way to introduce concepts from User Experience (UX) to your students. Did they provide instructions to the player on how to use the game, either in comments or in the game interface itself? Does the game start up and exit cleanly? Is it easy to configure any options that they exposed like number of cards?
+Games are also a good way to introduce concepts from user experience (UX) to your students. Did they provide instructions to the player on how to use the game, either in comments or in the game interface itself? Does the game start up and exit cleanly? Is it easy to configure any options that they exposed, such as number of cards?
 
 ## Finishing off
 
@@ -122,4 +124,3 @@ We went through an enrichment example using PyGame in this guide. PyGame is a gr
 For more PyGame inspiration, take a look at our basic [Juggling Game](https://docs.repl.it/tutorials/07-building-a-game-with-pygame) which includes an example of how to animate objects too.
 
 As we mentioned, data science and web application development are also good topics to set for enrichment homework. Take a look at our collection of [Python projects for beginners](https://www.codewithrepl.it/python-projects-for-beginners.html) for more ideas.
-
